@@ -11,6 +11,7 @@ struct Tab: View {
     
     @Binding var numberPage : Int
     @State var selected = 1
+    @EnvironmentObject var auth: Auth
     
     var body: some View {
         ZStack {

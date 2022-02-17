@@ -12,7 +12,8 @@ import SwiftyJSON
 
 class Auth: ObservableObject {
     
-    @Published var user = User(email: "", nickName: "", avatar: "", token: "")
+    @Published var user: User = User(email: "", nickName: "", avatar: "", token: "")
+    
     
     func signIn(email: String, password: String, completionHandler: (@escaping(_ result: User,_ error: String) -> Void)) {
         let url = "http://mskko2021.mad.hakta.pro/api/user/login"

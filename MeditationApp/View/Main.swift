@@ -12,8 +12,7 @@ struct Main: View {
     
     @ObservedObject var feeling = Feeling()
     @ObservedObject var quotes = Quotes()
-    
-    @State var user = User(email: "", nickName: "", avatar: "", token: "")
+    @EnvironmentObject var auth:  Auth
     
     var body: some View {
         ZStack{
@@ -25,7 +24,7 @@ struct Main: View {
                     Button(action: {
                         //
                     }, label: {
-                        Image("hamburger").frame(width: 23, height: 18, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding(.leading, 35)
+                        Image("hamburger").frame(width: 23, height: 18, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     })
                     Spacer()
                     //2
@@ -39,13 +38,14 @@ struct Main: View {
                     Button(action: {
                         //
                     }, label: {
-                        WebImage(url: URL(string: user.avatar)).placeholder(Image("avatar")).frame(width: 36.6, height: 35, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding(.trailing, 30)
+                        WebImage(url: URL(string: "\(getUser().avatar)")).resizable().frame(width: 35, height: 35).clipShape(Capsule())
                     })
-                }.padding(.top, 30)
+                }.frame(width: UIScreen.main.bounds.width-70)
+                .padding(.top, 30)
                 
                 
                 VStack{
-                    Text("С возвращением, \(user.nickName)!").font(.custom("Alegreya", size: 30))
+                    Text("С возвращением, \(getUser().nickName)!").font(.custom("Alegreya", size: 30))
                     Text("Как ты сегодня себя чувствуешь?").font(.custom("Alegreya Sans", size: 20)).opacity(0.7)
                 }
                 
@@ -108,10 +108,14 @@ struct Main: View {
             }.foregroundColor(.white)
         }.ignoresSafeArea()
     }
+    func getUser() -> User{
+        UserDefaultsData.shared.getData(key: "user")
+    }
 }
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
         Main()
+            .environmentObject(Auth())
     }
 }

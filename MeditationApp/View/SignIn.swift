@@ -15,7 +15,7 @@ struct SignIn: View {
     @State var showAlert = false
     @State var errorMsg = ""
     
-    @ObservedObject var auth = Auth()
+    @EnvironmentObject var auth:  Auth
     
     var body: some View {
         ZStack {

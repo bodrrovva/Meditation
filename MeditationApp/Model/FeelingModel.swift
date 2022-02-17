@@ -12,4 +12,6 @@ struct FeelingModel: Hashable {
     var name: String
     var icon: String
     var position: Int
+   
 }
+
